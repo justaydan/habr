@@ -8,6 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
-    protected $table='comments';
-    protected $fillable=['content','postId','authorId'];
+
+    protected $table = 'comments';
+    protected $fillable = ['content', 'postId', 'authorId', 'parentId'];
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'authorId', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'parentId', 'id')->with('author');
+    }
 }

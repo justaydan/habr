@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Resources\Post\CommentResource;
 use Illuminate\Http\Request;
 use App\Services\Post\CommentService;
 use App\Http\Requests\CommentRequest;
@@ -23,13 +24,12 @@ class CommentController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param $postId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index($postId)
     {
-        //
+        return CommentResource::collection($this->commentService->getAllComments($postId));
     }
 
 
@@ -47,9 +47,8 @@ class CommentController extends Controller
     }
 
 
-    public function update(CommentRequest $commentRequest, )
+    public function update(CommentRequest $commentRequest, Comment $comment)
     {
-        return $commentRequest;
         $comment = $this->commentService->updateComment($commentRequest->toDto(), $comment);
         return $comment;
     }
@@ -61,8 +60,14 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        $comment->delete();
+        $this->commentService->deleteCommentAndRelatedComment($comment);
         return response()->noContent();
 
+    }
+
+    public function addCommentToComment(CommentRequest $commentRequest,$postId,$commentId)
+    {
+        $this->commentService->addNewComment($commentRequest->toDto(),$commentId);
+        return response()->noContent(201);
     }
 }

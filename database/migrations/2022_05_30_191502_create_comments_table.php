@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->text('content');
+            $table->integer('parentId')->default(0);
             $table->unsignedBigInteger('authorId');
             $table->foreign('authorId')->references('id')->on('users');
             $table->unsignedBigInteger('postId');

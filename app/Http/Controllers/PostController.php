@@ -21,9 +21,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -31,12 +29,9 @@ class PostController extends Controller
     }
 
 
-
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PostRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(PostRequest $request)
     {
@@ -60,7 +55,7 @@ class PostController extends Controller
 
     /**
      * @param Post $post
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Post $post): Response
     {
@@ -69,6 +64,11 @@ class PostController extends Controller
 
     }
 
+    /**
+     * @param $postId
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function vote($postId, Request $request)
     {
        $this->postService->votePost($postId,$request);

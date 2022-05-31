@@ -36,7 +36,8 @@ class CommentRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $this->merge(['postId' => $this->route('postId')]);
+        if ($this->route('postId'))
+            $this->merge(['postId' => $this->route('postId')]);
     }
 
 
@@ -44,7 +45,7 @@ class CommentRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' =>$validator->errors()->all(),
+            'message' => $validator->errors()->all(),
             'data' => null,
         ], 422));
     }

@@ -28,9 +28,9 @@ class AuthController extends Controller
             'username' => 'required|string|max:255',
             'password' => 'required|string|min:8',
         ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 422);
-        }
+//        if ($validator->fails()) {
+//            return response()->json(['errors' => $validator->errors()->all()], 422);
+//        }
         $user = User::where('username', $request->username)->first();
         if ($user) {
             if (password_verify($request->password, $user->password)) {
