@@ -8,5 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $table="posts";
+
+    protected $table = "posts";
+    protected $fillable = ['title', 'link', 'authorId'];
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'authorId', 'id');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class, 'postId', 'id')->count();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'postId', 'id');
+    }
 }

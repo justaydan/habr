@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('title',255);
             $table->string('link');
-            $table->integer('vote')->default(0);
             $table->unsignedBigInteger('authorId');
             $table->foreign('authorId')->references('id')->on('users');
             $table->timestamps();
