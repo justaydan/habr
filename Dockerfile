@@ -8,8 +8,8 @@ RUN docker-php-ext-install pdo_mysql
 WORKDIR /app
 COPY . /app
 
-RUN composer install
+RUN composer install --optimize-autoloader --no-dev
 
-EXPOSE $PORT
 CMD php artisan serve --host=0.0.0.0 --port=$PORT
+EXPOSE $PORT
 
