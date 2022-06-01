@@ -26,11 +26,17 @@ class CommentDto
 
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getContent()
     {
         return $this->content;
     }
 
+    /**
+     * @return int|mixed|null
+     */
     public function getPostId()
     {
         return $this->postId;

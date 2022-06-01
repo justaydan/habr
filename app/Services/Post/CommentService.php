@@ -10,11 +10,21 @@ use App\Models\Post;
 
 class CommentService
 {
-    public function addNewComment(CommentDto $dto,$parentId=0)
+    /**
+     * @param CommentDto $dto
+     * @param $parentId
+     * @return mixed
+     */
+    public function addNewComment(CommentDto $dto, $parentId = 0)
     {
-        return Comment::create(['parentId'=>$parentId,'content' => $dto->getContent(), 'postId' => $dto->getPostId(), 'authorId' => request()->user()->id]);
+        return Comment::create(['parentId' => $parentId, 'content' => $dto->getContent(), 'postId' => $dto->getPostId(), 'authorId' => request()->user()->id]);
     }
 
+    /**
+     * @param CommentDto $dto
+     * @param Comment $comment
+     * @return Comment
+     */
     public function updateComment(CommentDto $dto, Comment $comment)
     {
         $comment->content = $dto->getContent();
@@ -22,13 +32,22 @@ class CommentService
         return $comment;
     }
 
+    /**
+     * @param int $postId
+     * @return mixed
+     */
     public function getAllComments(int $postId)
     {
-        return Post::query()->find($postId)->comments()->where('parentId',0)->get();
+        return Post::query()->find($postId)->comments()->where('parentId', 0)->get();
     }
 
-    public function deleteCommentAndRelatedComment(Comment $comment){
-        Comment::query()->where('parentId',$comment->id)->delete();
+    /**
+     * @param Comment $comment
+     * @return void
+     */
+    public function deleteCommentAndRelatedComment(Comment $comment)
+    {
+        Comment::query()->where('parentId', $comment->id)->delete();
         $comment->delete();
     }
 }

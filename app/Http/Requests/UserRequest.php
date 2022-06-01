@@ -20,12 +20,14 @@ class UserRequest extends FormRequest
         return true;
     }
 
-
+    /**
+     * @return \string[][]
+     */
     public function rules()
     {
         return [
-            'username' => ['unique:users','required', 'string', 'max:255'],
-            'password' => ['required','string','max:255',
+            'username' => ['unique:users', 'required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'max:255',
                 'regex:/[a-z]/',
                 'regex:/[A-Z]/',
                 'regex:/[0-9]/',
@@ -41,11 +43,15 @@ class UserRequest extends FormRequest
         return new UserDto($this);
     }
 
+    /**
+     * @param Validator $validator
+     * @return void
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' =>$validator->errors()->all(),
+            'message' => $validator->errors()->all(),
             'data' => null,
         ], 422));
     }

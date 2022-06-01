@@ -7,6 +7,10 @@ use App\Models\Post;
 
 class PostService
 {
+    /**
+     * @param PostDto $dto
+     * @return mixed
+     */
     public function createNewPost(PostDto $dto)
     {
         return Post::create([
@@ -16,6 +20,11 @@ class PostService
         ]);
     }
 
+    /**
+     * @param PostDto $dto
+     * @param Post $post
+     * @return Post
+     */
     public function updatePost(PostDto $dto, Post $post)
     {
         $post->title = $dto->getTitle();
@@ -24,6 +33,11 @@ class PostService
         return $post;
     }
 
+    /**
+     * @param $postId
+     * @param $request
+     * @return void
+     */
     public function votePost($postId, $request)
     {
         if ($request->key == "up")
@@ -32,7 +46,11 @@ class PostService
             request()->user()->votes()->detach([$postId]);
     }
 
-    public function getAllPosts(){
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllPosts()
+    {
         return Post::query()->get();
     }
 }

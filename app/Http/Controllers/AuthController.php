@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    /**
+     * @param UserRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(UserRequest $request)
     {
         try {
@@ -22,15 +26,17 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:255',
             'password' => 'required|string|min:8',
         ]);
-//        if ($validator->fails()) {
-//            return response()->json(['errors' => $validator->errors()->all()], 422);
-//        }
+
         $user = User::where('username', $request->username)->first();
         if ($user) {
             if (password_verify($request->password, $user->password)) {
@@ -44,7 +50,7 @@ class AuthController extends Controller
                 $response = ['password' => __('Password mismatch')];
                 return response()->json($response, 422);
             }
-        }else {
+        } else {
             $response = ['username' => __('No user found with username')];
             return response()->json($response, 422);
         }

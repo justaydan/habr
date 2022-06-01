@@ -12,7 +12,6 @@ use JetBrains\PhpStorm\Pure;
  */
 class UserDto
 {
-   
 
     /**
      * @var string

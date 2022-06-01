@@ -34,9 +34,8 @@ class CommentController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
+     * @param CommentRequest $request
+     * @param $postId
      * @return \Illuminate\Http\Response
      */
     public function store(CommentRequest $request, $postId)
@@ -46,7 +45,11 @@ class CommentController extends Controller
         return response()->noContent(201);
     }
 
-
+    /**
+     * @param CommentRequest $commentRequest
+     * @param Comment $comment
+     * @return Comment
+     */
     public function update(CommentRequest $commentRequest, Comment $comment)
     {
         $comment = $this->commentService->updateComment($commentRequest->toDto(), $comment);
@@ -65,9 +68,15 @@ class CommentController extends Controller
 
     }
 
-    public function addCommentToComment(CommentRequest $commentRequest,$postId,$commentId)
+    /**
+     * @param CommentRequest $commentRequest
+     * @param $postId
+     * @param $commentId
+     * @return \Illuminate\Http\Response
+     */
+    public function addCommentToComment(CommentRequest $commentRequest, $postId, $commentId)
     {
-        $this->commentService->addNewComment($commentRequest->toDto(),$commentId);
+        $this->commentService->addNewComment($commentRequest->toDto(), $commentId);
         return response()->noContent(201);
     }
 }
