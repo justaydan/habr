@@ -22,9 +22,7 @@ class CommentRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
+     * @return \string[][]
      */
     public function rules()
     {
@@ -34,13 +32,19 @@ class CommentRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return void
+     */
     protected function prepareForValidation()
     {
         if ($this->route('postId'))
             $this->merge(['postId' => $this->route('postId')]);
     }
 
-
+    /**
+     * @param Validator $validator
+     * @return void
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
