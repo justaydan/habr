@@ -17,18 +17,28 @@ class PostDto
      */
     private string $link;
 
-
+    /**
+     * @param PostRequest $request
+     */
     public function __construct(PostRequest $request)
     {
         $this->title = $request->title;
         $this->link = $request->link;
     }
 
-    public function getTitle(){
+    /**
+     * @return mixed|string
+     */
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function getLink(){
+    /**
+     * @return mixed|string
+     */
+    public function getLink()
+    {
         return $this->link;
     }
 
